@@ -16,3 +16,7 @@ vendor/
 .idea/
 .vscode/
 .DS_Store
+
+infrastructure/terraform/.terraform*
+infrastructure/terraform/terraform*
+infrastructure/terraform/provider.tf
