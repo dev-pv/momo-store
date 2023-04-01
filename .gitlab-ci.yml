@@ -11,7 +11,9 @@ include:
 
 build_frontend:
   stage: build
-  image: docker:20.10.12-dind-rootless
+  image: docker:stable
+  services:
+    - docker:dind
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
@@ -23,7 +25,9 @@ build_frontend:
 
 build_backend: 
   stage: build
-  image: docker:20.10.12-dind-rootless
+  image: docker:stable
+  services:
+    - docker:dind
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
@@ -35,7 +39,9 @@ build_backend:
 
 upload_frontend_latest:
   stage: release
-  image: docker:20.10.12-dind-rootless
+  image: docker:stable
+  services:
+    - docker:dind
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
@@ -48,7 +54,9 @@ upload_frontend_latest:
 
 upload_backend_latest:
   stage: release
-  image: docker:20.10.12-dind-rootless
+  image: docker:stable
+  services:
+    - docker:dind
   before_script:
      - until docker info; do sleep 1; done
      - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
