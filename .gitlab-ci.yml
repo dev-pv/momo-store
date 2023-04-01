@@ -5,6 +5,7 @@ stages:
 
 variables:
   VERSION: 1.0.${CI_PIPELINE_ID}
+  DOCKER_TLS_CERTDIR: ""
 
 include:
   - template: Security/SAST.gitlab-ci.yml
@@ -19,37 +20,31 @@ semgrep-sast:
 
 build_frontend:
   stage: build
-  image: docker:stable
-  services:
-    - docker:dind
+  image: docker:20-dind
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
-    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA .
+    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA -f frontend/Dockerfile .
     - docker push $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA
   tags:
     - yc-runner
 
 build_backend: 
   stage: build
-  image: docker:stable
-  services:
-    - docker:dind
+  image: docker:20-dind
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
-    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA .
+    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA -f backend/Dockerfile .
     - docker push $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA
   tags:
     - yc-runner
 
 upload_frontend_latest:
   stage: release
-  image: docker:stable
-  services:
-    - docker:dind
+  image: docker:20-dind
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
@@ -62,9 +57,7 @@ upload_frontend_latest:
 
 upload_backend_latest:
   stage: release
-  image: docker:stable
-  services:
-    - docker:dind
+  image: docker:20-dind
   before_script:
      - until docker info; do sleep 1; done
      - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY

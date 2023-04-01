@@ -1,7 +1,7 @@
 FROM golang:1.20-alpine as builder
 ARG VERSION=${VERSION}
 WORKDIR /app
-COPY . /app
+COPY backend /app
 RUN go build -o api-${VERSION} /app/cmd/api
 
 FROM alpine:3.17
