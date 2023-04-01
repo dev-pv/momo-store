@@ -25,8 +25,8 @@ build_frontend:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
-    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA -f frontend/Dockerfile .
-    - docker push $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA
+    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY_NAME/momo-store-frontend:$CI_COMMIT_SHA -f frontend/Dockerfile .
+    - docker push $YC_REGISTRY_NAME/momo-store-frontend:$CI_COMMIT_SHA
   tags:
     - yc-runner
 
@@ -37,8 +37,8 @@ build_backend:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
-    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA -f backend/Dockerfile .
-    - docker push $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA
+    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY_NAME/momo-store-backend:$CI_COMMIT_SHA -f backend/Dockerfile .
+    - docker push $YC_REGISTRY_NAME/momo-store-backend:$CI_COMMIT_SHA
   tags:
     - yc-runner
 
@@ -49,9 +49,9 @@ upload_frontend_latest:
     - until docker info; do sleep 1; done
     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
-    - docker pull $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA
-    - docker tag $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA $YC_REGISTRY/momo-store-frontend:latest
-    - docker push $YC_REGISTRY/momo-store-frontend:latest
+    - docker pull $YC_REGISTRY_NAME/momo-store-frontend:$CI_COMMIT_SHA
+    - docker tag $YC_REGISTRY_NAME/momo-store-frontend:$CI_COMMIT_SHA $YC_REGISTRY_NAME/momo-store-frontend:latest
+    - docker push $YC_REGISTRY_NAME/momo-store-frontend:latest
   tags:
     - yc-runner
 
@@ -62,9 +62,9 @@ upload_backend_latest:
      - until docker info; do sleep 1; done
      - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
-    - docker pull $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA
-    - docker tag $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA $YC_REGISTRY/momo-store-frontend:latest
-    - docker push $YC_REGISTRY/momo-store-backend:latest
+    - docker pull $YC_REGISTRY_NAME/momo-store-backend:$CI_COMMIT_SHA
+    - docker tag $YC_REGISTRY_NAME/momo-store-backend:$CI_COMMIT_SHA $YC_REGISTRY_NAME/momo-store-backend:latest
+    - docker push $YC_REGISTRY_NAME/momo-store-backend:latest
   tags:
     - yc-runner
      
