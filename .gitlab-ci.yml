@@ -13,32 +13,38 @@ build_frontend:
   stage: build
   image: docker:20.10.12-dind-rootless
   before_script:
-     - until docker info; do sleep 1; done
-     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
+    - until docker info; do sleep 1; done
+    - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
-     - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA .
-     - docker push $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA
+    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA .
+    - docker push $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA
+  tags:
+    - yc-runner
 
 build_backend: 
   stage: build
   image: docker:20.10.12-dind-rootless
   before_script:
-     - until docker info; do sleep 1; done
-     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
+    - until docker info; do sleep 1; done
+    - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
-     - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA .
-     - docker push $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA
+    - docker build --build-arg VERSION=$VERSION -t $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA .
+    - docker push $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA
+  tags:
+    - yc-runner
 
 upload_frontend_latest:
   stage: release
   image: docker:20.10.12-dind-rootless
   before_script:
-     - until docker info; do sleep 1; done
-     - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
+    - until docker info; do sleep 1; done
+    - docker login -u $YC_REGISTRY_LOGIN -p $YC_OAUTH_TOKEN $YC_REGISTRY
   script:
     - docker pull $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA
     - docker tag $YC_REGISTRY/momo-store-frontend:$CI_COMMIT_SHA $YC_REGISTRY/momo-store-frontend:latest
     - docker push $YC_REGISTRY/momo-store-frontend:latest
+  tags:
+    - yc-runner
 
 upload_backend_latest:
   stage: release
@@ -50,7 +56,8 @@ upload_backend_latest:
     - docker pull $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA
     - docker tag $YC_REGISTRY/momo-store-backend:$CI_COMMIT_SHA $YC_REGISTRY/momo-store-frontend:latest
     - docker push $YC_REGISTRY/momo-store-backend:latest
-
+  tags:
+    - yc-runner
      
 
 
