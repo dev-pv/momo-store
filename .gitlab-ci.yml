@@ -9,6 +9,14 @@ variables:
 include:
   - template: Security/SAST.gitlab-ci.yml
 
+nodejs-scan-sast:
+  tags:
+    - yc-runner
+
+semgrep-sast:
+  tags:
+    - yc-runner
+
 build_frontend:
   stage: build
   image: docker:stable
