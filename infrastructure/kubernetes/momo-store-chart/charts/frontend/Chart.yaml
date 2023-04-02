@@ -1,0 +1,7 @@
+---
+apiVersion: v2
+type: application
+name: frontend
+version: 1.0.0
+appVersion: "latest"
+description: Sausage Store Frontend Helm Chart

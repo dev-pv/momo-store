@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: momo-frontend-service
+  namespace: vp-namespace
+  labels:
+    app.kubernetes.io/name: momo-frontend-backend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: momo-frontend-backend
