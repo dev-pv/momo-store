@@ -1,0 +1,10 @@
+#cloud-config
+users:
+  - default
+  - name: prokoshev
+    lock_passwd: false
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjhc/ixznAHRJcMk0BM6Ph5OT1hWHcAx08fyqv89k6vUOQyTeHJK9zf7/VD2tFX87ZCDadBKX4aIs6M8Npus81hqfdr2LBnxGAZfU3UFBYqGmaj3Lur4mSUSZ6HI9aSyqT7/ClwiPt+EA0PWiXZxagUoj7/WW8qDr3r1a9euQh0lqrfY4nAg9mP3uiwiEFynQDutNvklvu6VYoESNWV/Fso8iS4ji2Eo/hAH3XYGgzvDnFbyKBQrd8TTuvcwQuYY14fvI2wYmIsaccsdrcqtoHfJ+6XDMLA2Kol2cBMq8wthLVepfun+db7PaUhX9tf4vHMiyeNmTZTGcNGlXtpwtIA33lTxr0Cna+aheeueqSCV2DeBhLTO2mSnv8bYkp5XV5H4hAamImrC8sI+ZcPvsxpj2lrNbXN+MiY/WcEVwkB2xRjBPRfYlyPYNGWWavkOzzRIfsNJhM3ErY9qmHrk+JHONI8NKH7mGXvx7GMxdmZqDGmrax7qVDOT+QVIoH9GU= prokoshev@prokoshev.dev
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    shell: /bin/bash
