@@ -1,0 +1,25 @@
+backend:
+  image: cr.yandex/crppqvt1dfahv0keoq97/momo-store-backend
+  image_tag: latest
+  imagePullPolicy: Always
+  replicas: 1
+  container_name: momo-store-backend
+  container_port: 8081
+  backend_service_name: momo-backend-service
+  strategy_type: RollingUpdate
+  service_port: 8081
+  service_target_port: 8081
+
+
+frontend:
+  image: cr.yandex/crppqvt1dfahv0keoq97/momo-store-frontend
+  image_tag: latest
+  imagePullPolicy: Always
+  replicas: 1
+  container_name: frontend
+  container_port: 8080
+  frontend_service_name: momo-frontend-service
+  service_port: 8080
+  ingress_fqdn: momo-store.prokoshev.dev
+  service_target_port: 8080
+  nginx_config_port: 8080

@@ -1,0 +1,10 @@
+id: fpqmhask7d1ahll9sh1r
+folder_id: b1g6f5e97oomo9hnu6o0
+created_at: "2023-04-03T11:40:41.925Z"
+name: momo-store-cert
+type: MANAGED
+domains:
+  - momo-store.prokoshev.dev
+status: VALIDATING
+updated_at: "2023-04-03T11:40:41.925Z"
+

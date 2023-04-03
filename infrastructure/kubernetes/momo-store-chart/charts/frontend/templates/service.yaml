@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Values.frontend_service_name }}"
+  namespace: vp-namespace
+  labels:
+    app.kubernetes.io/name: "{{ .Values.frontend_service_name }}"
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.service_port }}
+      protocol: TCP
+      targetPort: {{ .Values.service_target_port }}
+  selector:
+    app.kubernetes.io/name: "{{ .Values.frontend_service_name }}"

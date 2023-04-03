@@ -76,6 +76,16 @@ resource "yandex_vpc_security_group_rule" "port-6443" {
   port                   = 6443
 }
 
+resource "yandex_vpc_security_group_rule" "port-30000" {
+  description            = "The rule allows connection to ingress port range"
+  direction              = "ingress"
+  security_group_binding = yandex_vpc_security_group.k8s-main-sg.id
+  protocol               = "TCP"
+  v4_cidr_blocks         = ["0.0.0.0/0"]
+  from_port              = 30000
+  to_port                = 32767
+}
+
 resource "yandex_vpc_security_group_rule" "port-443" {
   description            = "The rule allows connection to Kubernetes API on 443 port from the Internet"
   direction              = "ingress"
