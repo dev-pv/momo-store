@@ -20,3 +20,4 @@ vendor/
 infrastructure/terraform/.terraform*
 infrastructure/terraform/terraform*
 infrastructure/terraform/provider.tf
+authorized-key.json

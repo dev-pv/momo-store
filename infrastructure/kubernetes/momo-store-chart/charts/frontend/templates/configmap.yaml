@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: vp-namespace
+  name: nginx-conf
+data: 
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+    error_log  /var/log/nginx/error.log notice;
+    pid        /var/run/nginx.pid;
+
+    events {
+        worker_connections 1024;
+    }
+
+    http {
+        include mime.types;
+        access_log  /var/log/nginx/access.log;
+        keepalive_timeout  65;
+
+        server {
+            listen {{ .Values.nginx_config_port }};
+
+            location / {
+                root /usr/share/nginx/html/dist/momo-store;
+                index index.html;
+                try_files $uri $uri/ /index.html;
+            }
+            location /momo-store {
+                root /usr/share/nginx/html/dist;
+            }
+            location /momo-store/categories {
+                proxy_pass http://momo-backend-service:8081/categories;
+            }
+            location /momo-store/products {
+                proxy_pass http://momo-backend-service:8081/products;
+            }
+        }
+    }

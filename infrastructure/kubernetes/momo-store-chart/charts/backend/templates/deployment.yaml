@@ -2,30 +2,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: momo-store-backend
+  name: momo-store-backend-{{ .Release.Name }}
   namespace: vp-namespace
   labels:
     app.kubernetes.io/name: momo-store-backend
 spec:
   strategy:
-    type: RollingUpdate
+    type: "{{ .Values.strategy_type }}"
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: "20%"
   selector:
     matchLabels:
       app.kubernetes.io/name: momo-store-backend
-  replicas: 1
+  replicas: {{ .Values.replicas }}
   template:
     metadata:
       labels:
         app.kubernetes.io/name: momo-store-backend
     spec:
       containers:
-        - image: cr.yandex/crppqvt1dfahv0keoq97/momo-store-backend:latest
-          name: momo-store-backend
-          imagePullPolicy: Always
+        - image: "{{ .Values.image }}:{{ .Values.image_tag }}"
+          name: "{{ .Values.container_name }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
-            - containerPort: 8081
+            - containerPort: {{ .Values.container_port }}
       imagePullSecrets:
         - name: docker-config-secret

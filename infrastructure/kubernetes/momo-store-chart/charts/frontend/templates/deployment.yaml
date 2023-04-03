@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: momo-store-frontend
+  name: momo-store-frontend-{{ .Release.Name }}
   namespace: vp-namespace
   labels:
     app.kubernetes.io/name: momo-store-frontend
@@ -17,10 +17,23 @@ spec:
         app.kubernetes.io/name: momo-store-frontend
     spec:
       containers:
-        - image: cr.yandex/crppqvt1dfahv0keoq97/momo-store-frontend:latest
-          name: momo-store-frontend
-          imagePullPolicy: Always
+        - image: "{{ .Values.image }}:{{ .Values.image_tag }}"
+          name: "{{ .Values.container_name }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.container_port }}
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
       imagePullSecrets:
         - name: docker-config-secret-front
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+
