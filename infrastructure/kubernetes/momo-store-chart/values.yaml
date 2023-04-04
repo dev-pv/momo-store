@@ -6,6 +6,7 @@ backend:
   container_name: momo-store-backend
   container_port: 8081
   backend_service_name: momo-backend-service
+  backend_service_selector: momo-store-backend
   strategy_type: RollingUpdate
   service_port: 8081
   service_target_port: 8081
@@ -19,6 +20,7 @@ frontend:
   container_name: frontend
   container_port: 8080
   frontend_service_name: momo-frontend-service
+  frontend_service_selector: momo-store-frontend
   service_port: 8080
   ingress_fqdn: momo-store.prokoshev.dev
   service_target_port: 8080
