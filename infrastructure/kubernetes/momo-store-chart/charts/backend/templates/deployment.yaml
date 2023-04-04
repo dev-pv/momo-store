@@ -20,6 +20,10 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: momo-store-backend
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8081"
+        prometheus.io/scrape: "true"
     spec:
       containers:
         - image: "{{ .Values.image }}:{{ .Values.image_tag }}"
@@ -27,5 +31,13 @@ spec:
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: {{ .Values.container_port }}
+          livenessProbe:
+            httpGet:
+              path: /products
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 2
+            failureThreshold: 6
       imagePullSecrets:
         - name: docker-config-secret
