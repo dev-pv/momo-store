@@ -9,22 +9,25 @@ resource "yandex_resourcemanager_folder_iam_member" "sa-editor" {
   member    = "serviceAccount:${yandex_iam_service_account.sa.id}"
 }
 
-// Создание статического ключа доступа
-resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
-  service_account_id = yandex_iam_service_account.sa.id
-  description        = "static access key for object storage"
-}
-
-
 // Создание бакета с использованием ключа
 resource "yandex_storage_bucket" "momo-store-bucket" {
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
+  access_key = "YCAJEIDgzcebIzp1iVV2SVefE"
+  secret_key = "YCNFD1atdB3Igd5v2I6HWUyJLdW39tOC5voB8WPH"
   bucket     = "momo-store-bucket"
+
+    anonymous_access_flags {
+    read = true
+    list = false
+  }
 }
 
 resource "yandex_storage_bucket" "momo-store-terraform-bucket" {
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
+  access_key = "YCAJEIDgzcebIzp1iVV2SVefE"
+  secret_key = "YCNFD1atdB3Igd5v2I6HWUyJLdW39tOC5voB8WPH"
   bucket     = "momo-store-terraform-state-bucket"
+
+    anonymous_access_flags {
+    read = false
+    list = false
+  }
 }
