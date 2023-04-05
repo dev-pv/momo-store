@@ -28,7 +28,7 @@
 4) Registry (Для Docker образов и для Helm чартов) 
 5) Certificate Manager (Приложение использует Let's Encrypt сертификаты)
 6) Cloud DNS
-7) Сетевые ресурсы и балансировщики
+7) Сетевые ресурсы и балансировщики   
 [INFRA.JPG](https://storage.yandexcloud.net/momo-store-bucket/INFRA.JPG)
 
 ## Мониторинг:
