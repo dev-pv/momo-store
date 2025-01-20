@@ -1,4 +1,4 @@
-# Momo Store aka Пельменная №2
+# Momo Store aka Пельменная №2 (Учебный проект 2022)
 #### **[https://momo-store.prokoshev.dev](https://momo-store.prokoshev.dev)**
 
 Установка приложения:
